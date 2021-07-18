@@ -68,6 +68,33 @@ const MCSFile = (function () {
       fileObj.file.setContent(data);
       return this;
     }
+
+    static share() {
+      const fileObj = _getFile({
+        folderName: this.folderName,
+        fileName: this.fileName,
+      });
+      const existingEditors = fileObj.file
+        .getEditors()
+        .map(editor => editor.getEmail());
+
+      const allEditors = Settings.syncTo;
+
+      const newEditors = allEditors.reduce((acc, editor) => {
+        if (-1 === existingEditors.indexOf(editor)) acc.push(editor);
+        return acc;
+      }, []);
+
+      const oldEditors = existingEditors.reduce((acc, editor) => {
+        if (-1 === allEditors.indexOf(editor)) acc.push(editor);
+        return acc;
+      }, []);
+
+      if (newEditors && newEditors.length) fileObj.file.addViewers(newEditors);
+      oldEditors.forEach(editor => fileObj.file.removeViewer(editor));
+
+      return this;
+    }
   }
 
   return MCSFile;

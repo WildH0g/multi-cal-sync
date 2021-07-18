@@ -27,3 +27,7 @@ const updateEvent = () => {
   const rc = new RemoteCal();
   rc.updateEvent('asln4tbl62drc9b7mjvm4m5bio');
 };
+
+const shareFile = () => {
+  MCSFile.share();
+};
