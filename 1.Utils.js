@@ -8,7 +8,9 @@ const Utils = (() => {
 
   const clone = obj => JSON.parse(JSON.stringify(obj));
 
-  return { pipe, clone };
+  const isEmptyObj = obj => 0 === Object.keys(obj).length;
+
+  return { pipe, clone, isEmptyObj };
 })();
 
 if ('undefined' !== typeof module) module.exports = Utils;

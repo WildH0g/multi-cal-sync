@@ -2,12 +2,11 @@
 // jshint laxbreak: true
 
 const main = () => {
-
-  const events = LocalCal.sync(CalendarApp.getDefaultCalendar().getId());
+  const e = LocalCal.sync(CalendarApp.getDefaultCalendar().getId());
 
   MCSFile.write({
-    events
-  });  
+    ...e,
+  });
 };
 
 const removeKey = () => {

@@ -56,7 +56,12 @@ const LocalCal = (function () {
       // Retrieve events one page at a time.
       let events;
       let pageToken;
-      const eventsObj = {};
+      // const eventsObj = {};
+      const eventsObj = fullSync ? {} : JSON.parse(MCSFile.read());
+      if (Utils.isEmptyObj(eventsObj)) eventsObj.events = {};
+
+      const syncTimeStamp = Date.now();
+      
       do {
         try {
           options.pageToken = pageToken;
@@ -65,8 +70,8 @@ const LocalCal = (function () {
           // Check to see if the sync token was invalidated by the server;
           // if so, perform a full sync instead.
           if (
-            e.message ===
-            'Sync token is no longer valid, a full sync is required.'
+            'Sync token is no longer valid, a full sync is required.' ===
+            e.message
           ) {
             properties.deleteProperty('syncToken');
             LocalCal.sync(calendarId, true);
@@ -80,48 +85,10 @@ const LocalCal = (function () {
           for (let i = 0; i < events.items.length; i++) {
             const event = events.items[i];
 
-            // const {
-            //   id,
-            //   iCalUID,
-            //   status,
-            //   created,
-            //   updated,
-            //   summary,
-            //   description,
-            //   creator,
-            //   organizer,
-            //   start,
-            //   end,
-            //   recurrence,
-            //   recurringEventId,
-            //   originalStartTime,
-            //   attendees
-            // } = event;
-
-            // const eventObj = {
-            //   id,
-            //   iCalUID,
-            //   status,
-            //   created,
-            //   updated,
-            //   summary,
-            //   description,
-            //   creator,
-            //   organizer,
-            //   start,
-            //   end,
-            //   recurrence,
-            //   recurringEventId,
-            //   originalStartTime,
-            //   attendees,
-            //   syncDateTime: Date.now()
-            // };
-            const eventObj = {
-              ...Utils.clone(event),
-              syncDateTime: Date.now()
-            };
-
-            eventsObj[eventObj.id] = eventObj;
+            const eventObj = Utils.clone(event);
+            eventObj.lastSync = syncTimeStamp;
+            eventsObj.events[eventObj.id] = eventObj;
+            
           }
         } else {
           console.log('No events found.');
@@ -130,6 +97,7 @@ const LocalCal = (function () {
         pageToken = events.nextPageToken;
       } while (pageToken);
 
+      eventsObj.lastSync = syncTimeStamp;
       properties.setProperty('syncToken', events.nextSyncToken);
 
       return eventsObj;

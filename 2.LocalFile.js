@@ -53,7 +53,7 @@ const MCSFile = (function () {
         fileName: this.fileName,
       });
 
-      console.log('file content:', content);
+      // console.log('file content:', content);
 
       return content;
     }
