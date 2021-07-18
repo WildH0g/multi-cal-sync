@@ -2,19 +2,6 @@
 // jshint laxbreak: false
 
 const LocalCal = (function () {
-  const _template = {
-    eventId: {
-      description: '',
-      start: '',
-      end: '',
-      isAllDay: false,
-      isRecurring: true,
-      invitees: [],
-      syncDate: '',
-      calendarId: '',
-      status: '',
-    },
-  };
 
   function _getRelativeDate(daysOffset, hour) {
     const date = new Date();
