@@ -10,7 +10,9 @@ const Utils = (() => {
 
   const isEmptyObj = obj => 0 === Object.keys(obj).length;
 
-  return { pipe, clone, isEmptyObj };
+  log = (...args) => (Settings.verbose ? console.log(...args) : undefined);
+
+  return { pipe, clone, isEmptyObj, log };
 })();
 
 if ('undefined' !== typeof module) module.exports = Utils;

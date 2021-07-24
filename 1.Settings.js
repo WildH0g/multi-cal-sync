@@ -2,8 +2,11 @@
 // jshint laxbreak: true
 
 const Settings = (() => {
-  const _settings = {};
-  _settings.syncTo = ['dmitry@noodledocs.com', 'dmitry.kostyuk.ext@veolia.com'];
-  _settings.syncFrom = ['dmitry.kostyuk@gmail.com'];
+  const _settings = {
+    syncTo: ['dmitry@noodledocs.com', 'dmitry.kostyuk.ext@veolia.com'],
+    syncFrom: ['dmitry.kostyuk@gmail.com'],
+    eventPrefix: '[MSC Synced] ',
+    verbose: true,
+  };
   return _settings;
 })();

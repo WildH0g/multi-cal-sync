@@ -78,7 +78,7 @@ const LocalCal = (function () {
             
           }
         } else {
-          console.log('No events found.');
+          Utils.log('No events found.');
         }
 
         pageToken = events.nextPageToken;
