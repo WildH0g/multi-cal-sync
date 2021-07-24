@@ -31,3 +31,8 @@ const updateEvent = () => {
 const shareFile = () => {
   MCSFile.share();
 };
+
+const showFiles = () => {
+  const rf = new RemoteFiles();
+  console.log(rf.getList().toString());
+};

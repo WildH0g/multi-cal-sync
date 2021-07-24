@@ -6,6 +6,8 @@ const Settings = (() => {
     syncTo: ['dmitry@noodledocs.com', 'dmitry.kostyuk.ext@veolia.com'],
     syncFrom: ['dmitry.kostyuk@gmail.com'],
     eventPrefix: '[MSC Synced] ',
+    localFolderName: 'MultiCalSync',
+    localFileName: 'MCSSyncFile.json',
     verbose: true,
   };
   return _settings;
